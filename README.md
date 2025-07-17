@@ -1,7 +1,3 @@
-ecommerce-ui/README.md
-```
-
-```
 # Ecommerce UI
 
 Welcome to the Ecommerce UI project! This is a frontend application for an ecommerce platform, designed to help you learn and practice modern web development.
