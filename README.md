@@ -64,3 +64,4 @@ Happy coding!
 - [React Documentation](https://reactjs.org/docs/getting-started.html)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs/installation)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/handbook/intro.html)
+- [Shadcn UI Documentation](https://ui.shadcn.com/docs/installation)
