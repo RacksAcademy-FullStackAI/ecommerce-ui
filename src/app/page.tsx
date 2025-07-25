@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
+import { RecommendedProducts } from "@/components/RecommendedProducts";
 
 export default function Home() {
   return (
-    <div className="flex justify-center items-center h-dvh">
-      <Button className="">My button</Button>
+    <div className="py-4 px-8">
+      <RecommendedProducts className="w-11/12 m-auto" />
     </div>
   );
 }
