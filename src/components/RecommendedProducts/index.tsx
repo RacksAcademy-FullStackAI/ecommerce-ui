@@ -43,7 +43,7 @@ export function RecommendedProducts({ className }: RecommendedProductProps) {
     <Carousel className={className}>
       <CarouselContent>
         {products.map((product) => (
-          <CarouselItem key={product.game_id} className="basis-1/3">
+          <CarouselItem key={product.game_id} className="sm:basis-1/2 md:basis-1/3">
             <Card>
               <CardContent>
                 <div className="h-10 w-full bg-blue-400 rounded-md" />

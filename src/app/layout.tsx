@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
+import { ThemeProvider } from "@/components/theme-provider";
+import clsx from "clsx";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,12 +26,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased grid grid-rows-[auto_1fr] h-screen`}
+        className={clsx(
+          geistSans.variable,
+          geistMono.variable,
+          "antialiased grid grid-rows-[auto_1fr] h-screen",
+        )}
       >
-        <Header />
-        <main className="overflow-y-auto">{children}</main>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          <main className="overflow-y-auto">{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );
