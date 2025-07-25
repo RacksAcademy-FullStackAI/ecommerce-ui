@@ -57,3 +57,10 @@ http://localhost:3000
 - This project is a great opportunity to practice your skills, so don't hesitate to experiment and explore!
 
 Happy coding!
+
+## Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [React Documentation](https://reactjs.org/docs/getting-started.html)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs/installation)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/handbook/intro.html)

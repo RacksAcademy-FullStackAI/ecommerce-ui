@@ -1,21 +1,86 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F5F7FA;
+  --foreground: #1E1E1E;
+  --surface: #FFFFFF;
+  --surface-secondary: #F5F7FA;
+  --surface-tertiary: #E8ECF2;
+  --surface-hover: #E0E7FF;
+  --divider: #D1D5DB;
+
+  --primary: #5F4B8B;
+  --secondary: #00C2CB;
+  --accent: #FFD400;
+  --accent-secondary: #FF5757;
+  --text-primary: #1E1E1E;
+  --text-secondary: #6B7280;
+  --success: #22C55E;
+  --success-bg: #DCFCE7;
+  --warning: #F59E0B;
+  --warning-bg: #FEF3C7;
+  --error: #EF4444;
+  --error-bg: #FEE2E2;
+  --info: #3B82F6;
+  --info-bg: #DBEAFE;
+}
+
+@theme {
+    --shadow-light: rgba(0, 0, 0, 0.05);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-secondary: var(--surface-secondary);
+  --color-surface-tertiary: var(--surface-tertiary);
+  --color-surface-hover: var(--surface-hover);
+  --color-divider: var(--divider);
+
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-error: var(--error);
+  --color-error-bg: var(--error-bg);
+  --color-info: var(--info);
+  --color-info-bg: var(--info-bg);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+      --background: #0F111A;
+      --foreground: #F5F7FA;
+      --surface: #1A1C25;
+      --surface-secondary: #232530;
+      --surface-tertiary: #2C2F3A;
+      --surface-hover: #313442;
+      --divider: #3F4250;
+
+      --primary: #8C7AE6;
+      --secondary: #00D8DF;
+      --accent: #FFD93D;
+      --accent-secondary: #FF6B6B;
+      --text-primary: #F5F5F5;
+      --text-secondary: #A0A3AD;
+      --success: #22C55E;
+      --success-bg: rgba(34, 197, 94, 0.15);
+      --warning: #F59E0B;
+      --warning-bg: rgba(245, 158, 11, 0.15);
+      --error: #EF4444;
+      --error-bg: rgba(239, 68, 68, 0.15);
+      --info: #3B82F6;
+      --info-bg: rgba(59, 130, 246, 0.15);
   }
 }
 
