@@ -1,5 +1,5 @@
-import { User } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { AuthMenu } from "./AuthMenu";
 
 export function Header() {
   return (
@@ -7,7 +7,7 @@ export function Header() {
       <h1>Racks Games</h1>
 
       <div className="flex items-center space-x-2">
-        <User />
+        <AuthMenu />
         <ThemeToggle />
       </div>
     </header>
