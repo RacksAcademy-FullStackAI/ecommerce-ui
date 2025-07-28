@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { SignupFormSchema } from "./validator";
 
 type SignupResponse = {
   access_token: string;
@@ -18,28 +19,65 @@ const mockSignupResponse: SignupResponse = {
   id: "1",
 };
 
-export async function signup(formData: FormData) {
+type FormState =
+  | {
+      errors?: {
+        username?: string[];
+        email?: string[];
+        password?: string[];
+      };
+      message?: string;
+      success?: boolean;
+    }
+  | undefined;
+
+type CreateSessionParams = Pick<
+  SignupResponse,
+  "access_token" | "refresh_token"
+>;
+
+async function createSession({
+  access_token,
+  refresh_token,
+}: CreateSessionParams) {
+  const cookieStore = await cookies();
+
+  cookieStore.set("access_token", access_token);
+  cookieStore.set("refresh_token", refresh_token);
+}
+
+export async function signup(
+  _: FormState,
+  formData: FormData
+): Promise<FormState> {
   try {
-    console.log("formData: ", Object.fromEntries(formData.entries()));
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const username = formData.get("username") as string;
 
-    const response = Promise.resolve(mockSignupResponse);
-
-    console.log({
+    const validatedFields = SignupFormSchema.safeParse({
       email,
-      password,
       username,
-      response,
+      password,
     });
 
-    const cookieStore = await cookies();
+    if (!validatedFields.success) {
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+        success: false,
+      };
+    }
 
-    cookieStore.set("access_token", mockSignupResponse.access_token);
-    cookieStore.set("refresh_token", mockSignupResponse.refresh_token);
+    const response = await Promise.resolve(mockSignupResponse);
+
+    await createSession({
+      access_token: response.access_token,
+      refresh_token: response.refresh_token,
+    });
+
+    return { success: true, message: "Signup successful" };
   } catch (error) {
     console.error(error);
-    throw new Error("Signup failed");
+    return { message: "Signup failed", success: false };
   }
 }

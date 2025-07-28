@@ -15,29 +15,41 @@ type SelectedOption = "signup" | "login" | null;
 
 export function AuthMenu() {
   const [selectedOption, setSelectedOption] = useState<SelectedOption>(null);
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedOption(null);
+  };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <User />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="start">
-          <DropdownMenuItem>
-            <DialogTrigger onClick={() => setSelectedOption("signup")}>
+          <DropdownMenuItem asChild>
+            <DialogTrigger
+              className="w-full"
+              onClick={() => setSelectedOption("signup")}
+            >
               Registro
             </DialogTrigger>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <DialogTrigger onClick={() => setSelectedOption("login")}>
+          <DropdownMenuItem asChild>
+            <DialogTrigger
+              className="w-full"
+              onClick={() => setSelectedOption("login")}
+            >
               Iniciar sesión
             </DialogTrigger>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {selectedOption && <AuthForm type={selectedOption} />}
+      {selectedOption && <AuthForm type={selectedOption} onClose={handleClose} />}
     </Dialog>
   );
 }
