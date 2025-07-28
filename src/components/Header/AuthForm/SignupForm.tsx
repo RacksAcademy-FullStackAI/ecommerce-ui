@@ -5,7 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useActionState, useEffect } from "react";
 
-export function SignupForm({ onClose }: { onClose: () => void }) {
+type SignupFormProps = {
+  onClose: () => void;
+};
+
+export function SignupForm({ onClose }: SignupFormProps) {
   const [state, action, pending] = useActionState(signup, undefined);
 
   useEffect(() => {

@@ -42,8 +42,8 @@ async function createSession({
 }: CreateSessionParams) {
   const cookieStore = await cookies();
 
-  cookieStore.set("access_token", access_token);
-  cookieStore.set("refresh_token", refresh_token);
+  cookieStore.set("accessToken", access_token);
+  cookieStore.set("refreshToken", refresh_token);
 }
 
 export async function signup(
@@ -80,4 +80,31 @@ export async function signup(
     console.error(error);
     return { message: "Signup failed", success: false };
   }
+}
+
+export async function refreshSession(refreshToken: string) {
+  try {
+    const response = await Promise.resolve(mockSignupResponse);
+
+    // await createSession({
+    //   access_token: response.access_token,
+    //   refresh_token: response.refresh_token,
+    // });
+
+    return {
+      isAuth: true,
+    };
+  } catch (error) {
+    console.error('[refreshSession] Error refreshing session: ', error);
+    return {
+      isAuth: false,
+    };
+  }
+}
+
+export async function logout() {
+  const cookieStore = await cookies();
+
+  cookieStore.delete("accessToken");
+  cookieStore.delete("refreshToken");
 }

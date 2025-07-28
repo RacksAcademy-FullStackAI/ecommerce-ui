@@ -1,15 +1,15 @@
 "use client";
 
-import { User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { AuthForm } from "./AuthForm";
-import { Dialog, DialogTrigger } from "../ui/dialog";
+} from "../../ui/dropdown-menu";
+import { AuthForm } from "../AuthForm";
+import { Dialog, DialogTrigger } from "../../ui/dialog";
 import { useState } from "react";
+import { User } from "lucide-react";
 
 type SelectedOption = "signup" | "login" | null;
 
