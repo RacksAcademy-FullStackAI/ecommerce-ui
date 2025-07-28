@@ -1,22 +1,11 @@
-import {
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { signup } from "@/app/lib/auth/actions";
+import { Button } from "@/components/ui/button";
+import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useActionState, useEffect } from "react";
 
-type AuthFormProps = {
-  type: "signup" | "login";
-  onClose: () => void;
-};
-
-function SignupForm({ onClose }: { onClose: () => void }) {
+export function SignupForm({ onClose }: { onClose: () => void }) {
   const [state, action, pending] = useActionState(signup, undefined);
 
   useEffect(() => {
@@ -75,31 +64,4 @@ function SignupForm({ onClose }: { onClose: () => void }) {
       </form>
     </DialogContent>
   );
-}
-
-function LoginForm() {
-  return (
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Iniciar sesión</DialogTitle>
-        <DialogDescription>
-          Introduce tus credenciales para acceder a tu cuenta.
-        </DialogDescription>
-      </DialogHeader>
-
-      <Label htmlFor="email">Email</Label>
-      <Input id="email" type="email" placeholder="name@example.com" />
-    </DialogContent>
-  );
-}
-
-export function AuthForm({ type, onClose }: AuthFormProps) {
-  switch (type) {
-    case "signup":
-      return <SignupForm onClose={onClose} />;
-    case "login":
-      return <LoginForm />;
-    default:
-      return null;
-  }
 }
