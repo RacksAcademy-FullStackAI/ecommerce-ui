@@ -1,6 +1,6 @@
 import { signup } from "@/app/lib/auth/actions";
 import { Button } from "@/components/ui/button";
-import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useActionState, useEffect } from "react";
@@ -61,6 +61,7 @@ export function SignupForm({ onClose }: SignupFormProps) {
         )}
 
         <DialogFooter>
+          <DialogClose>Cancelar</DialogClose>
           <Button type="submit" disabled={pending}>
             Registrarse
           </Button>

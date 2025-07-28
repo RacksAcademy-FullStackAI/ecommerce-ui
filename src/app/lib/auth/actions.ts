@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { SignupFormSchema } from "./validator";
+import { LoginFormSchema, SignupFormSchema } from "./validator";
 
 type SignupResponse = {
   access_token: string;
@@ -31,24 +31,35 @@ type FormState =
     }
   | undefined;
 
-type CreateSessionParams = Pick<
-  SignupResponse,
-  "access_token" | "refresh_token"
->;
+type LoginFormState =
+  | {
+      errors?: {
+        username?: string[];
+        email?: string[];
+      };
+      message?: string;
+      success?: boolean;
+    }
+  | undefined;
+
+type CreateSessionParams = {
+  accessToken: string;
+  refreshToken: string;
+};
 
 async function createSession({
-  access_token,
-  refresh_token,
+  accessToken,
+  refreshToken,
 }: CreateSessionParams) {
   const cookieStore = await cookies();
 
-  cookieStore.set("accessToken", access_token);
-  cookieStore.set("refreshToken", refresh_token);
+  cookieStore.set("accessToken", accessToken);
+  cookieStore.set("refreshToken", refreshToken);
 }
 
 export async function signup(
   _: FormState,
-  formData: FormData
+  formData: FormData,
 ): Promise<FormState> {
   try {
     const email = formData.get("email") as string;
@@ -71,8 +82,8 @@ export async function signup(
     const response = await Promise.resolve(mockSignupResponse);
 
     await createSession({
-      access_token: response.access_token,
-      refresh_token: response.refresh_token,
+      accessToken: response.access_token,
+      refreshToken: response.refresh_token,
     });
 
     return { success: true, message: "Signup successful" };
@@ -95,7 +106,7 @@ export async function refreshSession(refreshToken: string) {
       isAuth: true,
     };
   } catch (error) {
-    console.error('[refreshSession] Error refreshing session: ', error);
+    console.error("[refreshSession] Error refreshing session: ", error);
     return {
       isAuth: false,
     };
@@ -107,4 +118,47 @@ export async function logout() {
 
   cookieStore.delete("accessToken");
   cookieStore.delete("refreshToken");
+}
+
+export async function login(
+  _: LoginFormState,
+  formData: FormData,) {
+  try {
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    if (!email || !password) {
+      return {
+        errors: {
+          email: !email ? ["El correo electrónico es requerido"] : [],
+          password: !password ? ["La contraseña es requerida"] : [],
+        },
+        success: false,
+      };
+    }
+
+    const validatedFields = LoginFormSchema.safeParse({ email, password });
+    if (!validatedFields.success) {
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+        success: false,
+      };
+    }
+
+    const response = await Promise.resolve(mockSignupResponse);
+
+    await createSession({
+      accessToken: response.access_token,
+      refreshToken: response.refresh_token,
+    });
+
+    return {
+      isAuth: true,
+    };
+  } catch (error) {
+    console.error("[login] Error logging in: ", error);
+    return {
+      isAuth: false,
+    };
+  }
 }
