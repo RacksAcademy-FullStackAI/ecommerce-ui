@@ -25,11 +25,11 @@ const mockedProduct: Product = {
   release_date: new Date("2023-01-01"),
 };
 
-type RecommendedProductProps = {
+type ProductsProps = {
   className?: string;
 }
 
-export function RecommendedProducts({ className }: RecommendedProductProps) {
+export function Products({ className }: ProductsProps) {
   const products: Product[] = [
     mockedProduct,
     { ...mockedProduct, game_id: 456 },

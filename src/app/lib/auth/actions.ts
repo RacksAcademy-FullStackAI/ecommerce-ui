@@ -45,16 +45,19 @@ type LoginFormState =
 type CreateSessionParams = {
   accessToken: string;
   refreshToken: string;
+  userId: string;
 };
 
 async function createSession({
   accessToken,
   refreshToken,
+  userId
 }: CreateSessionParams) {
   const cookieStore = await cookies();
 
   cookieStore.set("accessToken", accessToken);
   cookieStore.set("refreshToken", refreshToken);
+  cookieStore.set("userId", userId);
 }
 
 export async function signup(
@@ -84,6 +87,7 @@ export async function signup(
     await createSession({
       accessToken: response.access_token,
       refreshToken: response.refresh_token,
+      userId: response.id,
     });
 
     return { success: true, message: "Signup successful" };
@@ -148,6 +152,7 @@ export async function login(_: LoginFormState, formData: FormData) {
     await createSession({
       accessToken: response.access_token,
       refreshToken: response.refresh_token,
+      userId: response.id,
     });
 
     return {
