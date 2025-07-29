@@ -3,20 +3,10 @@ import { Button } from "@/components/ui/button";
 import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useActionState, useEffect } from "react";
+import { useActionState } from "react";
 
-type SignupFormProps = {
-  onClose: () => void;
-};
-
-export function SignupForm({ onClose }: SignupFormProps) {
+export function SignupForm() {
   const [state, action, pending] = useActionState(signup, undefined);
-
-  useEffect(() => {
-    if (state?.success) {
-      onClose();
-    }
-  }, [state, onClose]);
 
   return (
     <DialogContent>

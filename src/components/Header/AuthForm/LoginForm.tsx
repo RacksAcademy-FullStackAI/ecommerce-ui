@@ -12,11 +12,7 @@ import { Button } from "@/components/ui/button";
 import { useActionState } from "react";
 import { login } from "@/app/lib/auth/actions";
 
-type LoginFormProps = {
-  onClose: () => void;
-};
-
-export function LoginForm({ onClose }: LoginFormProps) {
+export function LoginForm() {
   const [state, action, pending] = useActionState(login, undefined);
 
   return (

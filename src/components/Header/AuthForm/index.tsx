@@ -3,15 +3,14 @@ import { SignupForm } from "./SignupForm";
 
 type AuthFormProps = {
   type: "signup" | "login";
-  onClose: () => void;
 };
 
-export function AuthForm({ type, onClose }: AuthFormProps) {
+export function AuthForm({ type }: AuthFormProps) {
   switch (type) {
     case "signup":
-      return <SignupForm onClose={onClose} />;
+      return <SignupForm />;
     case "login":
-      return <LoginForm onClose={onClose} />;
+      return <LoginForm />;
     default:
       return null;
   }

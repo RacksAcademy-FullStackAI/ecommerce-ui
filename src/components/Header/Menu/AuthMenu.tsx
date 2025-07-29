@@ -17,11 +17,6 @@ export function AuthMenu() {
   const [selectedOption, setSelectedOption] = useState<SelectedOption>(null);
   const [open, setOpen] = useState(false);
 
-  const handleClose = () => {
-    setOpen(false);
-    setSelectedOption(null);
-  };
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DropdownMenu>
@@ -49,7 +44,7 @@ export function AuthMenu() {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {selectedOption && <AuthForm type={selectedOption} onClose={handleClose} />}
+      {selectedOption && <AuthForm type={selectedOption} />}
     </Dialog>
   );
 }

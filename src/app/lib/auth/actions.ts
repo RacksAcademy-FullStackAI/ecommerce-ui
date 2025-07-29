@@ -89,7 +89,7 @@ export async function signup(
     return { success: true, message: "Signup successful" };
   } catch (error) {
     console.error(error);
-    return { message: "Signup failed", success: false };
+    return { message: "Signup failed", success: false, isAuth: false };
   }
 }
 
@@ -120,9 +120,7 @@ export async function logout() {
   cookieStore.delete("refreshToken");
 }
 
-export async function login(
-  _: LoginFormState,
-  formData: FormData,) {
+export async function login(_: LoginFormState, formData: FormData) {
   try {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
