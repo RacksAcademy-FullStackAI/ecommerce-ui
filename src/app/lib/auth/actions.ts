@@ -122,6 +122,7 @@ export async function logout() {
 
   cookieStore.delete("accessToken");
   cookieStore.delete("refreshToken");
+  cookieStore.delete("userId");
 }
 
 export async function login(_: LoginFormState, formData: FormData) {
