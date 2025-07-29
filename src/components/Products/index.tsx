@@ -1,13 +1,7 @@
 import { type Product } from "@/api/products";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { formatCurrency } from "@/utils/currency";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import clsx from "clsx";
+import { ProductCard } from "./ProductCard";
+import { getUser } from "@/app/lib/auth/dal";
 
 const mockedProduct: Product = {
   game_id: 123,
@@ -32,18 +26,69 @@ const mockedResponse = [
   { ...mockedProduct, game_id: 176 },
   { ...mockedProduct, game_id: 234 },
   { ...mockedProduct, game_id: 345 },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
+  { ...mockedProduct, game_id: parseInt(`${Math.random() * 5000}`) },
 ]
 
 type ProductsProps = {
   className?: string;
 }
 
-const getProducts = async (userId?: string) => {
+const getProducts = async (userId: string | null) => {
   const url = new URL('/products', process.env.BASE_URL);
 
   if (userId) {
     url.searchParams.set('user_id', userId);
   }
+
+  console.log('URL ', url.toString())
 
    await fetch(url.toString(), {
     cache: "no-store",
@@ -53,30 +98,14 @@ const getProducts = async (userId?: string) => {
 };
 
 export async function Products({ className }: ProductsProps) {
-  const products = await getProducts();
-
-  console.log('products', products)
+  const user = await getUser();
+  const products = await getProducts(user?.id || null);
 
   return (
-    <Carousel className={className}>
-      <CarouselContent>
-        {products.map((product) => (
-          <CarouselItem key={product.game_id} className="sm:basis-1/2 md:basis-1/3">
-            <Card>
-              <CardContent>
-                <div className="h-10 w-full bg-blue-400 rounded-md" />
-              </CardContent>
-              <CardFooter className="space-x-4">
-                <p>{product.title}</p>
-                <p>{formatCurrency(product.price)}</p>
-              </CardFooter>
-            </Card>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+    <div className={clsx('grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4', className)}>
+      {products.map(product => {
+        return <ProductCard product={product} key={product.game_id} />;
+      })}
+    </div>
   );
 }
