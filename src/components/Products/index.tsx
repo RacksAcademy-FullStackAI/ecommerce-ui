@@ -25,19 +25,37 @@ const mockedProduct: Product = {
   release_date: new Date("2023-01-01"),
 };
 
+const mockedResponse = [
+  mockedProduct,
+  { ...mockedProduct, game_id: 456 },
+  { ...mockedProduct, game_id: 789 },
+  { ...mockedProduct, game_id: 176 },
+  { ...mockedProduct, game_id: 234 },
+  { ...mockedProduct, game_id: 345 },
+]
+
 type ProductsProps = {
   className?: string;
 }
 
-export function Products({ className }: ProductsProps) {
-  const products: Product[] = [
-    mockedProduct,
-    { ...mockedProduct, game_id: 456 },
-    { ...mockedProduct, game_id: 789 },
-    { ...mockedProduct, game_id: 176 },
-    { ...mockedProduct, game_id: 234 },
-    { ...mockedProduct, game_id: 345 },
-  ];
+const getProducts = async (userId?: string) => {
+  const url = new URL('/products', process.env.BASE_URL);
+
+  if (userId) {
+    url.searchParams.set('user_id', userId);
+  }
+
+   await fetch(url.toString(), {
+    cache: "no-store",
+  });
+
+  return mockedResponse;
+};
+
+export async function Products({ className }: ProductsProps) {
+  const products = await getProducts();
+
+  console.log('products', products)
 
   return (
     <Carousel className={className}>
