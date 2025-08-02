@@ -88,8 +88,6 @@ const getProducts = async (userId: string | null) => {
     url.searchParams.set('user_id', userId);
   }
 
-  console.log('URL ', url.toString())
-
    await fetch(url.toString(), {
     cache: "no-store",
   });
