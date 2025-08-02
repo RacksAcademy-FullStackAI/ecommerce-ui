@@ -16,7 +16,7 @@ const getProductDetails = async (productId: string) => {
     title: "Nombre del juego",
     description: "Descripcion del juego",
     genre: "simulator",
-    tags: ['tag1', 'tag2', 'tag3'],
+    tags: ["tag1", "tag2", "tag3"],
     price: 19.99,
     stock_quantity: 10,
     popularity_score: 0.95,
@@ -55,9 +55,17 @@ export default async function ProductDetailsPage({
   } = await getProductDetails(productId);
 
   return (
-    <div className="grid grid-cols-[2fr_2fr_1fr]">
-      <div className="py-2 px-8">
-        <Image src={imageUrl} alt="Product Image" width={500} height={750} />
+    <div className="grid grid-cols-1 md:grid-cols-[2fr_2fr_1fr] gap-4 md:gap-0">
+      <div className="py-2 px-8 flex justify-center items-center">
+        <Image
+          src={imageUrl}
+          alt="Product Image"
+          sizes="(max-width: 768px) 100%, (max-width: 1200px) 50vw, 500px"
+          className="h-auto w-auto"
+          priority
+          width={300}
+          height={300}
+        />
       </div>
 
       <div className="py-2 px-8">
@@ -75,7 +83,10 @@ export default async function ProductDetailsPage({
         <ul className="list-disc pl-4 mb-4">
           <li>{category}</li>
           <li>{genre}</li>
-          <li>Fecha de lanzamiento: <span className="text-lg">{formatDate(releaseDate)}</span></li>
+          <li>
+            Fecha de lanzamiento:{" "}
+            <span className="text-lg">{formatDate(releaseDate)}</span>
+          </li>
         </ul>
 
         <ul className="flex flex-wrap gap-2">
@@ -85,7 +96,6 @@ export default async function ProductDetailsPage({
             </li>
           ))}
         </ul>
-
       </div>
 
       <div className="px-4">
@@ -93,7 +103,9 @@ export default async function ProductDetailsPage({
           <p className="text-3xl font-bold">{formatCurrency(price)}</p>
           <Stock stock={stockQuantity} />
 
-          <Button disabled={!stockQuantity} className="my-4">Comprar ya</Button>
+          <Button disabled={!stockQuantity} className="my-4">
+            Comprar ya
+          </Button>
         </aside>
       </div>
     </div>
